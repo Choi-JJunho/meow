@@ -1,8 +1,9 @@
 package meow.meow.exception
 
+import meow.meow.global.exception.ErrorCode
+
 class UserNotFoundException(
     val userId: Long? = null,
-    message: String? = null
-) : RuntimeException(message) {
-
-}
+    errorCode: ErrorCode,
+    message: String
+) : MeowException(errorCode = errorCode, message = message)

@@ -1,28 +1,27 @@
 package meow.meow.global.exception
 
+import meow.meow.exception.UserNotFoundException
 import meow.util.logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 
 @RestControllerAdvice
-class GlobalExceptionHandler {
-
+class GlobalBusinessExceptionHandler {
     val log = logger()
 
     @ExceptionHandler
-    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponseModel> {
-        log.warn("")
+    fun handleUserNotFoundException(ex: UserNotFoundException): ResponseEntity<ErrorResponse> {
+        log.warn("handleUserNotFoundException. errorTraceId : ${ex.errorTraceId} message: ${ex.message}")
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(
-                ErrorResponseModel(
-                    "",
-                    "",
-                    1
+                ErrorResponse(
+                    message = ex.errorCode.defaultMessage,
+                    detail = ex.message,
+                    errorTraceId = ex.errorTraceId
                 )
             )
     }

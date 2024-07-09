@@ -1,24 +1,38 @@
 package meow.meow.user.domain
 
-import jakarta.persistence.Entity
+import jakarta.persistence.*
 import jakarta.persistence.EnumType.STRING
-import jakarta.persistence.Enumerated
-import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType.IDENTITY
-import jakarta.persistence.Id
+import meow.meow.global.common.BaseEntity
 
 @Entity
+@Table(name = "users")
 class User(
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    val id: Long,
-    val email: String,
-    val phoneNumber: String?,
-    var nickname: String?,
-    @Enumerated(STRING)
-    val oauthType: OAuthType,
-    val imageUrl: String? = null
-) {
+    val id: Long = 0,
+    var email: String,
+    var phoneNumber: String? = null,
+    var nickname: String? = null,
+    @Enumerated(STRING) var oauthType: OAuthType,
+    var imagePath: String? = null
+) : BaseEntity() {
 
-
+    companion object {
+        fun create(
+            email: String,
+            phoneNumber: String? = null,
+            nickname: String? = null,
+            oauthType: OAuthType,
+            imagePath: String? = null
+        ): User {
+            return User(
+                email = email,
+                phoneNumber = phoneNumber,
+                nickname = nickname,
+                oauthType = oauthType,
+                imagePath = imagePath
+            )
+        }
+    }
 }
