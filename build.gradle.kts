@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
 }
 
-group = "meow"
+group = "pomonyang"
 
 java {
     toolchain {
